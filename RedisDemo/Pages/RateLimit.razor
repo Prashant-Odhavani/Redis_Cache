@@ -1,0 +1,89 @@
+﻿@page "/rateLimit"
+@inject IRateLimiter _rateLimiter;
+@inject IHttpContextAccessor httpContextAccessor
+
+<h3>Rate Limit Settings</h3>
+
+<form>
+    <div class="form-group">
+        <label for="limit">Limit:</label>
+        <input type="number" class="form-control" id="limit" @bind="@Limit">
+    </div>
+    <div class="form-group">
+        <label for="duration">Duration (minutes):</label>
+        <input type="number" class="form-control" id="duration" @bind="@Duration">
+    </div>
+    <button type="button" class="btn btn-primary mt-4" @onclick="SetRateLimit">Set Rate Limit</button>
+</form>
+<p class="pb-5">Limit: @Limit and Duration @Duration</p>
+
+<button type="button" class="btn btn-primary pb-3" @onclick="checkAccessLimit">Check access</button>
+<button type="button" class="btn btn-primary pb-3" @onclick="resetLimit">Reset Limit</button>
+<h3 pb-2 pt-2>@message</h3>
+
+
+<p class="pt-5">Commands for redis-cli</p>
+<ol>
+    <li>
+        <p>
+            # Set the rate limit key to zero if it doesn't exist <br/>
+            SETNX my_rate_limit_key 0
+        </p>
+    </li>
+    <li>
+        <p>
+            # Increment the rate limit key by 1 <br />
+            INCR my_rate_limit_key
+        </p>
+    </li>
+    <li>
+        <p>
+            # Set the expiration time of the rate limit key to 60 seconds <br />
+            EXPIRE my_rate_limit_key 60
+        </p>
+    </li>
+    <li>
+        <p>
+            # Get the remaining time to live of the rate limit key <br />
+            TTL my_rate_limit_key
+        </p>
+    </li>
+</ol>
+@code {
+    private int Limit { get; set; }
+    private int Duration { get; set; }
+    private string message;
+
+    private async Task SetRateLimit()
+    {
+        await _rateLimiter.SetRateLimitAsync(Limit, TimeSpan.FromMinutes(Duration), httpContextAccessor.HttpContext.Connection.RemoteIpAddress.ToString());
+    }
+
+    private void checkAccessLimit()
+    {
+        // Check if the request is allowed based on the rate limit settings
+        var isAllowed = _rateLimiter.IsAllowed(httpContextAccessor.HttpContext.Connection.RemoteIpAddress.ToString(), Limit);
+
+        if (!isAllowed)
+        {
+            message = "Too Many Requests";
+        }
+        else
+        {
+            message = "request proceed success";
+        }
+    }
+
+    private async Task resetLimit()
+    {
+        bool reset = await _rateLimiter.ResetLimit(httpContextAccessor.HttpContext.Connection.RemoteIpAddress.ToString());
+        if (!reset)
+        {
+            message = "record not found";
+        }
+        else
+        {
+            message = "limit reset successfully";
+        }
+    }
+}

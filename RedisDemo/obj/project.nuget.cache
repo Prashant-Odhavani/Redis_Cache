@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "dgSpecHash": "TeUOmJ+3m3UUVBZdc0hdVFnwlYeb9N6Uz1YWHGxpPSV9pryWIsiGEW6BWEKY4QU8OGQvHzwevNv1j2T4aAgrzA==",
+  "success": true,
+  "projectFilePath": "D:\\250BG-nvme-Preasahnt.Odhavani-drive-backup\\Downloads\\RedisDemoApp\\RedisDemoApp\\RedisDemo\\RedisDemo.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\prashant\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\7.0.0\\microsoft.extensions.caching.abstractions.7.0.0.nupkg.sha512",
+    "C:\\Users\\prashant\\.nuget\\packages\\microsoft.extensions.caching.stackexchangeredis\\7.0.5\\microsoft.extensions.caching.stackexchangeredis.7.0.5.nupkg.sha512",
+    "C:\\Users\\prashant\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\7.0.0\\microsoft.extensions.dependencyinjection.abstractions.7.0.0.nupkg.sha512",
+    "C:\\Users\\prashant\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\7.0.0\\microsoft.extensions.logging.abstractions.7.0.0.nupkg.sha512",
+    "C:\\Users\\prashant\\.nuget\\packages\\microsoft.extensions.options\\7.0.1\\microsoft.extensions.options.7.0.1.nupkg.sha512",
+    "C:\\Users\\prashant\\.nuget\\packages\\microsoft.extensions.primitives\\7.0.0\\microsoft.extensions.primitives.7.0.0.nupkg.sha512",
+    "C:\\Users\\prashant\\.nuget\\packages\\pipelines.sockets.unofficial\\2.2.2\\pipelines.sockets.unofficial.2.2.2.nupkg.sha512",
+    "C:\\Users\\prashant\\.nuget\\packages\\stackexchange.redis\\2.6.104\\stackexchange.redis.2.6.104.nupkg.sha512",
+    "C:\\Users\\prashant\\.nuget\\packages\\system.io.pipelines\\5.0.1\\system.io.pipelines.5.0.1.nupkg.sha512"
+  ],
+  "logs": []
+}

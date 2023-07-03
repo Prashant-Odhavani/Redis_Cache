@@ -1,0 +1,55 @@
+﻿@page "/hyperloglog"
+@inject IHyperLogLogDemo _hyperLogLogDemo;
+
+<h3>HyperLogLog</h3>
+
+<form>
+    <div class="form-group">
+        <label for="limit">Log Key:</label>
+        <input type="text" class="form-control" id="logkey" @bind="@LogKey">
+
+        <label for="limit">Log value:</label>
+        <input type="text" class="form-control" id="logvalue" @bind="@LogValue">
+    </div>
+    <button type="button" class="btn btn-primary mt-4" @onclick="AddHyperLogLog">Set Rate Limit</button>
+</form>
+<p class="pb-5">response: @response</p>
+
+<button type="button" class="btn btn-primary pb-3" @onclick="LogUniqueCount">Approximate count of unique values</button>
+<h3 pb-2 pt-2>@logUniqueCount</h3>
+
+<p class="pt-5">Commands for redis-cli</p>
+<ol> 
+    <li>PFADD myHyperLogLog value1 value2 value3</li>
+    <li>PFCOUNT myHyperLogLog</li>
+    <li>PFDEBUG myHyperLogLog</li>
+</ol>
+@code {
+    private string LogKey;
+    private string LogValue;
+    private string response;
+    private string logUniqueCount;
+    private void AddHyperLogLog()
+    {
+        if (string.IsNullOrEmpty(LogKey) || string.IsNullOrEmpty(LogValue))
+        {
+            response = "Log key and value required";
+        }
+        else
+        {
+            response = _hyperLogLogDemo.AddHyperLogLog(LogKey, LogValue);
+        }
+    }
+
+    private void LogUniqueCount()
+    {
+        if (string.IsNullOrEmpty(LogKey))
+        {
+            logUniqueCount = "Log key required";
+        }
+        else
+        {
+            logUniqueCount = _hyperLogLogDemo.GetHyperLogLogLength(LogKey);
+        }
+    }
+}
